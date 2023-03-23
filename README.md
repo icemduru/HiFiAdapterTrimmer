@@ -1,7 +1,7 @@
 # HiFiAdapterTrimmer
 Adapter+Barcode trimming from Pacbio HiFi reads
 
-Althoug reads that created by PacBio Sequel II should be adapter+barcode free, we can still get reads that contain those. hiTrim.py is a python script that help you to trim those reads. To use this script you first need to blast your adapter+barcode sequences againts your Pacbio reads.
+Despite the fact that the PacBio Sequel II generates reads that are supposed to be free of adapters and barcodes, it is still possible to obtain reads that contain them. To address this issue, hiTrim.py, a Python script, can be used to trim these reads. To utilize this script, the adapter+barcode sequences must first be BLASTed against the PacBio reads.
 
 ## Requirements
 python3.6+
@@ -18,6 +18,8 @@ So probably you first need to run blast similar to this:
 After you get your blast results, you can use hiTrim.py.
 
 `python3 hiTrim.py -i my_sequences.fasta -b blast_res.txt -o filtered.fasta`
+
+The adapter+barcode sequences will be trimmed by hiTrim.py if those sequences are at the beggining or at the end of the hifi read.
 
 ## Warnings
 If a blast hit length is larger than 50 and the hit is in the middle of the read. The read will be discarded. The list of discarded reads can be seen in discarded_reads.txt.
