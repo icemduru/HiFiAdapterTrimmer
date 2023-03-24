@@ -28,6 +28,6 @@ The adapter+barcode sequences will be trimmed by hiTrim.py if those sequences ar
 Please check also example folder for example run and tutorial.
 
 ## Warnings
-If a blast hit length is larger than 50 and the hit is in the middle of the read. The read will be discarded. The list of discarded reads can be seen in discarded_reads.txt.
+If a blast hit length is larger than 50 and the hit is in the middle of the read. The read will be discarded. The list of discarded reads can be seen in discarded_reads.txt. If you don't want to remove those reads, use -l option. Use a large number with -l option.
 
 

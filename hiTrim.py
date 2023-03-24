@@ -6,6 +6,7 @@ parser = argparse.ArgumentParser(description='Hifi Adapter trimming based on bla
 parser.add_argument('-b', dest='blastfile', required=True, help="the blast result file that you created using adapter+barcode sequence and with -outfmt 6")
 parser.add_argument('-i', dest='input', required=True, help="input sequences .fasta, .fa")
 parser.add_argument('-o', dest='output', required=True, help="output file name, for example: myfiltered_sequences.fasta")
+parser.add_argument('-l', dest='length', nargs='?', const=51, default=7, type=int, help="The length of blast hit to remove reads that adapter found in the middle of the read")
 args = parser.parse_args()
 
 file1 = open(args.output, 'w')
@@ -32,7 +33,7 @@ with open(args.input) as handle:
 			elif end_of_hit < 200 :
 				file1.write('>'+str(record.id)+'\n')
 				file1.write(str(record.seq[end_of_hit:])+'\n')
-			elif int(hits[record.id][4]) < 51:
+			elif int(hits[record.id][4]) < args.length:
 				file1.write('>'+str(record.id)+'\n')
 				file1.write(str(record.seq)+'\n')
 			else:
