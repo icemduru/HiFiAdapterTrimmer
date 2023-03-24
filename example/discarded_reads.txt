@@ -1,0 +1,1 @@
+adapter is in the middle of the read of seq3. Read length is: 6142. Adapter is 78 bp long and position in the read is 3001 3075. This reads won't be written in the output

@@ -8,6 +8,10 @@ python3.6+
 
 biopython==1.81
 
+You can install biopython using:
+
+`pip install biopython`
+
 ## How to run
 So probably you first need to run blast similar to this:
 

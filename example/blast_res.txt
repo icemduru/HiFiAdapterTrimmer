@@ -1,0 +1,4 @@
+seq4	adapter_barcode	98.387	62	0	1	1	61	17	78	4.48e-28	108
+seq1	adapter_barcode	100.000	63	0	0	3002	3064	1	63	8.95e-31	117
+seq2	adapter_barcode	100.000	69	0	0	5	73	10	78	1.94e-34	128
+seq3	adapter_barcode	94.872	78	1	3	3001	3075	78	1	4.92e-31	119
