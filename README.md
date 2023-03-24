@@ -25,6 +25,8 @@ After you get your blast results, you can use hiTrim.py.
 
 The adapter+barcode sequences will be trimmed by hiTrim.py if those sequences are at the beggining or at the end of the hifi read.
 
+Please check also example folder for example run and tutorial.
+
 ## Warnings
 If a blast hit length is larger than 50 and the hit is in the middle of the read. The read will be discarded. The list of discarded reads can be seen in discarded_reads.txt.
 
