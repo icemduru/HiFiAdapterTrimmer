@@ -6,18 +6,23 @@ parser = argparse.ArgumentParser(description='Hifi Adapter trimming based on bla
 parser.add_argument('-b', dest='blastfile', required=True, help="the blast result file that you created using adapter+barcode sequence and with -outfmt 6")
 parser.add_argument('-i', dest='input', required=True, help="input sequences .fasta, .fa")
 parser.add_argument('-o', dest='output', required=True, help="output file name, for example: myfiltered_sequences.fasta")
-parser.add_argument('-l', dest='length', nargs='?', const=51, default=7, type=int, help="The length of blast hit to remove reads that adapter found in the middle of the read")
+parser.add_argument('-l', dest='length', nargs='?', const=51, default=51, type=int, help="The length of blast hit to remove reads that adapter found in the middle of the read")
 args = parser.parse_args()
 
 file1 = open(args.output, 'w')
-file2 = open("discarded_reads.txt", 'w')
+file2 = open('discarded_reads.txt', 'w')
 hits = dict()
+remove_because_of_multiple_hit = []
 
 for line in open(args.blastfile):
 	line=line.strip()
 	s_line=line.split('\t')
-	#hit_start,hit_end,adapt_start_adapt_end,hit_len
-	hits[s_line[0]] = [s_line[6],s_line[7],s_line[8],s_line[9],s_line[3]]
+	if s_line[0] in hits.keys():
+		remove_because_of_multiple_hit.append(s_line[0])
+		hits.pop(s_line[0])
+	else:
+		#hit_start,hit_end,adapt_start_adapt_end,hit_len
+		hits[s_line[0]] = [s_line[6],s_line[7],s_line[8],s_line[9],s_line[3]]
 
 #print(hits)
 print("filtering is started, output will be written in "+str(args.output)+" -- Reads that adapter found in the middle of the read will be removed, the list of removed ones can be seen in the file discarded_reads.txt")
@@ -39,5 +44,12 @@ with open(args.input) as handle:
 			else:
 				file2.write("adapter is in the middle of the read of "+str(record.id)+". Read length is: "+str(len_of_read)+". Adapter is "+str(hits[record.id][4])+" bp long and position in the read is "+str(start_of_hit)+' '+str(end_of_hit)+". This reads won't be written in the output"+'\n')
 		else:
-			file1.write('>'+str(record.id)+'\n')
-			file1.write(str(record.seq)+'\n')
+			if record.id in remove_because_of_multiple_hit:
+				continue
+			else:
+				file1.write('>'+str(record.id)+'\n')
+				file1.write(str(record.seq)+'\n')
+
+for line in remove_because_of_multiple_hit:
+	line=line.strip()
+	file2.write('The read '+line+' is discarted because of double blast hit.'+'\n')
